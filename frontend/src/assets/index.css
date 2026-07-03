@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+html {
+    @apply bg-neutral-950 p-2 text-neutral-50;
+    font-family: "Inter", sans-serif;
+}
