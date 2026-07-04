@@ -1,0 +1,3 @@
+[submodule "tooling/beecrypt"]
+	path = tooling/beecrypt
+	url = https://github.com/duckeydev/beecrypt
