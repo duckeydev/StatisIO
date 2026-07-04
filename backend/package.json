@@ -1,8 +1,11 @@
 {
   "name": "backend",
-  "module": "src/index.ts",
+  "module": "src/entry.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "start": "bun src/entry.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -12,6 +15,7 @@
   "dependencies": {
     "@elysiajs/jwt": "^1.4.2",
     "elysia": "^1.4.29",
-    "mongoose": "^9.7.3"
+    "mongoose": "^9.7.3",
+    "bson": "^7.3.1"
   }
 }
