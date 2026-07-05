@@ -6,6 +6,8 @@
       "name": "backend",
       "dependencies": {
         "@elysiajs/jwt": "^1.4.2",
+        "beecrypt": "https://npm.ants.land/beecrypt/-/beecrypt-1.0.0.tgz",
+        "bson": "^7.3.1",
         "elysia": "^1.4.29",
         "mongoose": "^9.7.3",
       },
@@ -39,6 +41,8 @@
     "@types/webidl-conversions": ["@types/webidl-conversions@7.0.3", "", {}, "sha512-CiJJvcRtIgzadHCYXw7dqEnMNRjhGZlYK05Mj9OyktqV8uVT8fD2BFOB7S1uwBE3Kj2Z+4UyPmFw/Ixgw/LAlA=="],
 
     "@types/whatwg-url": ["@types/whatwg-url@13.0.0", "", { "dependencies": { "@types/webidl-conversions": "*" } }, "sha512-N8WXpbE6Wgri7KUSvrmQcqrMllKZ9uxkYWMt+mCSGwNc0Hsw9VQTW7ApqI4XNrx6/SaM2QQJCzMPDEXE058s+Q=="],
+
+    "beecrypt": ["beecrypt@https://npm.ants.land/beecrypt/-/beecrypt-1.0.0.tgz", { "peerDependencies": { "typescript": "^6.0.3" } }, "sha512-OU521Zi4rQtZ35x/4KpSbW1yKR5eIE6bvFd6j8KUg0xz6U1np2q1gRbEqREU56O0wE5Bu6Xi+OqolOtyM2LbCQ=="],
 
     "bson": ["bson@7.3.1", "", {}, "sha512-h/C0qe6857pQhcSJHLfsR1uYGj98Ge3wKAD3Ed9KqH3wcVh+BM4Jq4xISD7vs9OPuT07n+q3QQVjslJ286j6ag=="],
 

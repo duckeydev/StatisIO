@@ -1,36 +1,14 @@
 import { Elysia, t } from "elysia";
 import { jwt } from "@elysiajs/jwt";
 import User from "../../models/user";
-
-const ACCESS_EXPIRY = "7d";
-const REFRESH_EXPIRY = "14d";
-const blacklist = new Set<string>();
-
-function getSecret(name: string): string {
-  const secret = Bun.env[name];
-  if (!secret && Bun.env.NODE_ENV === "production") {
-    throw new Error(`Missing ${name} environment variable`);
-  }
-  return secret || `dev-${name}-change-in-production`;
-}
-
-async function verifyAuth(
-  authorization: string | null | undefined,
-  jwt: any,
-): Promise<{ userId: string } | { error: string }> {
-  if (!authorization?.startsWith("Bearer ")) {
-    return { error: "No token provided" };
-  }
-  const token = authorization.slice(7);
-  if (blacklist.has(token)) {
-    return { error: "Token revoked" };
-  }
-  const payload = await jwt.verify(token);
-  if (!payload?.userId) {
-    return { error: "Invalid or expired token" };
-  }
-  return { userId: payload.userId as string };
-}
+import {
+  ACCESS_EXPIRY,
+  REFRESH_EXPIRY,
+  blacklist,
+  beecrypt,
+  getSecret,
+  verifyAuth,
+} from "../../utils/auth";
 
 export const authRoutes = new Elysia({ prefix: "/auth" })
   .use(
@@ -69,7 +47,7 @@ export const authRoutes = new Elysia({ prefix: "/auth" })
         };
       }
 
-      const passwordHash = await Bun.password.hash(password);
+      const passwordHash = await beecrypt.hash(password);
       const user = await User.create({
         username,
         email: normalizedEmail,
@@ -103,10 +81,7 @@ export const authRoutes = new Elysia({ prefix: "/auth" })
       const { email, password } = body;
       const user = await User.findOne({ email: email.toLowerCase().trim() });
 
-      if (
-        !user ||
-        !(await Bun.password.verify(password, user.passwordHash))
-      ) {
+      if (!user || !(await beecrypt.verify(password, user.passwordHash))) {
         set.status = 401;
         return { error: "Invalid email or password" };
       }
@@ -197,14 +172,12 @@ export const authRoutes = new Elysia({ prefix: "/auth" })
         return { error: "User not found" };
       }
 
-      if (
-        !(await Bun.password.verify(body.currentPassword, user.passwordHash))
-      ) {
+      if (!(await beecrypt.verify(body.currentPassword, user.passwordHash))) {
         set.status = 403;
         return { error: "Current password is incorrect" };
       }
 
-      user.passwordHash = await Bun.password.hash(body.newPassword);
+      user.passwordHash = await beecrypt.hash(body.newPassword);
       await user.save();
 
       return { message: "Password updated" };

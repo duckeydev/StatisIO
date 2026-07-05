@@ -1,10 +1,10 @@
 {
   "name": "backend",
-  "module": "src/entry.ts",
+  "module": "src/index.ts",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun src/entry.ts"
+    "start": "bun src/index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"
@@ -16,6 +16,7 @@
     "@elysiajs/jwt": "^1.4.2",
     "elysia": "^1.4.29",
     "mongoose": "^9.7.3",
-    "bson": "^7.3.1"
+    "bson": "^7.3.1",
+    "beecrypt": "https://npm.ants.land/beecrypt/-/beecrypt-1.0.0.tgz"
   }
 }
